@@ -10,7 +10,7 @@
                 <a class="btn btn-success" href="{{ route('mahasiswas.create') }}"> Input Mahasiswa</a>
             </div>
             <form action="{{ route('search') }}" method="GET">
-                <input type="text" name="search" placeholder="Cari Mahasiswa" value="{{ old('search') }}">
+                <input type="text" name="search" placeholder="Cari Mahasiswa" value=" {{ old('search') }}">
                 <input type="submit" value="Search">
             </form>
         </div> 
@@ -29,16 +29,16 @@
             <th>Kelas</th>
             <th>Jurusan</th>
             <th>No_Handphone</th>
-            <th>E-mail</th>
+            <th>Email</th>
             <th>Tanggal_Lahir</th>
             <th width="280px">Action</th>
         </tr>
-        @foreach ($paginate as $Mahasiswa)
+        @foreach ($mahasiswas as $Mahasiswa)
         <tr>
             
             <td>{{ $Mahasiswa->Nim }}</td>
             <td>{{ $Mahasiswa->Nama }}</td>
-            <td>{{ $Mahasiswa->Kelas->nama_kelas }}</td>
+            <td>{{ $Mahasiswa->Kelas }}</td>
             <td>{{ $Mahasiswa->Jurusan }}</td>
             <td>{{ $Mahasiswa->No_Handphone }}</td>
             <td>{{ $Mahasiswa->Email }}</td>
@@ -56,15 +56,14 @@
                     <button type="submit" class="btn btn-danger">Delete</button>
             </form>
             </td>
-            <td> 
         </tr>
         @endforeach
     </table>
 
     <br>
-    Halaman : {{ $paginate->currentPage() }}<br/>
-    Jumlah Data : {{ $paginate->total() }}<br/>
-    Data Per Halaman : {{ $paginate->perPage()}}<br/>
-    <br/>
-    {{ $paginate->links()}}
+        Halaman : {{ $mahasiswas->currentPage() }}<br/>
+        Jumlah Data : {{ $mahasiswas->total() }}<br/>
+        Data Per Halaman : {{ $mahasiswas->perPage() }}<br/>
+        <br/>
+        {{ $mahasiswas->links() }}
 @endsection

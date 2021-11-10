@@ -26,11 +26,6 @@ class Mahasiswa extends Model //Definisi Model
         'Jurusan',
         'No_Handphone',
         'Email',
-        'Tanggal_Lahir'
+        'Tanggal_Lahir',
     ];
-
-    public function kelas()
-    {
-        return $this->belongsTo(Kelas::class);
-    }
-}
+};
