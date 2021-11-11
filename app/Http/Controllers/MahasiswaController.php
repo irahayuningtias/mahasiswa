@@ -6,6 +6,7 @@ use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Kelas;
+use PDF;
 
 class MahasiswaController extends Controller
 {
@@ -51,6 +52,10 @@ class MahasiswaController extends Controller
         $mahasiswas->no_handphone = $request->get('No_Handphone');
         $mahasiswas->email = $request->get('Email');
         $mahasiswas->tanggal_lahir = $request->get('Tanggal_Lahir');
+        if ($request->file('foto')){
+            $file = $request->file('foto')->store('images', 'public');
+            $mahasiswas->foto = $file;
+        }
         $mahasiswas->save();
 
         //jika data berhasil ditambahkan, akan kembali ke halaman utama
@@ -95,6 +100,10 @@ class MahasiswaController extends Controller
         $mahasiswas->no_handphone = $request->get('No_Handphone');
         $mahasiswas->email = $request->get('Email');
         $mahasiswas->tanggal_lahir = $request->get('Tanggal_Lahir');
+        if ($request->file('foto')){
+            $file = $request->file('foto')->store('images', 'public');
+            $mahasiswas->foto = $file;
+        }
         $mahasiswas->save();
 
         $kelas = new Kelas;
@@ -136,4 +145,18 @@ class MahasiswaController extends Controller
             ->get();
         return view('mahasiswas.nilai', compact('mahasiswa', 'nilai'));
     }
-};
+
+    public function cetak_pdf($Nim)
+    {
+        $mahasiswa = Mahasiswa::with('kelas')->find($Nim);
+        $nilai = DB::table('mahasiswa_matakuliah')
+            ->join('matakuliah', 'matakuliah.id', '=', 'mahasiswa_matakuliah.mk_id')
+            ->join('mahasiswa', 'mahasiswa.Nim', '=', 'mahasiswa_matakuliah.mhs_id')
+            ->select('mahasiswa_matakuliah.*', 'matakuliah.*')
+            ->where('mhs_id', $Nim)
+            ->get();
+
+        $pdf = PDF::loadview('mahasiswas.cetak_pdf', compact('mahasiswa','nilai'));
+        return $pdf->stream();
+    }
+}
