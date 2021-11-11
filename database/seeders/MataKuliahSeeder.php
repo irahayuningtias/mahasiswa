@@ -31,9 +31,9 @@ class MataKuliahSeeder extends Seeder
                 'semester' => 4,
             ],
             [   'nama_matkul' => 'Praktikum Basis Data Lanjut',
-            'sks' => 3,
-            'jam' => 6,
-            'semester' => 4,
+                'sks' => 3,
+                'jam' => 6,
+                'semester' => 4,
             ],
         ];
 

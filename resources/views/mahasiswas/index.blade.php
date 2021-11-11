@@ -33,12 +33,12 @@
             <th>Tanggal_Lahir</th>
             <th width="280px">Action</th>
         </tr>
-        @foreach ($mahasiswas as $Mahasiswa)
+        @foreach ($paginate as $Mahasiswa)
         <tr>
             
             <td>{{ $Mahasiswa->Nim }}</td>
             <td>{{ $Mahasiswa->Nama }}</td>
-            <td>{{ $Mahasiswa->Kelas }}</td>
+            <td>{{ $Mahasiswa->Kelas->nama_kelas }}</td>
             <td>{{ $Mahasiswa->Jurusan }}</td>
             <td>{{ $Mahasiswa->No_Handphone }}</td>
             <td>{{ $Mahasiswa->Email }}</td>
@@ -61,9 +61,9 @@
     </table>
 
     <br>
-        Halaman : {{ $mahasiswas->currentPage() }}<br/>
-        Jumlah Data : {{ $mahasiswas->total() }}<br/>
-        Data Per Halaman : {{ $mahasiswas->perPage() }}<br/>
+        Halaman : {{ $paginate->currentPage() }}<br/>
+        Jumlah Data : {{ $paginate->total() }}<br/>
+        Data Per Halaman : {{ $paginate->perPage() }}<br/>
         <br/>
-        {{ $mahasiswas->links() }}
+        {{ $paginate->links() }}
 @endsection
