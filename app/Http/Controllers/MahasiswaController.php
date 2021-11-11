@@ -123,4 +123,17 @@ class MahasiswaController extends Controller
         $mahasiswas = Mahasiswa::where('Nama', 'like', "%" .$keyword . "%")->paginate(5);
         return view('mahasiswas.index', compact('mahasiswas'));
     }
+
+    public function nilai($Nim)
+    {
+        $mahasiswa = Mahasiswa::with('kelas')->find($Nim);
+
+        $nilai = DB::table('mahasiswa_matakuliah')
+            ->join('matakuliah', 'matakuliah.id', '=', 'mahasiswa_matakuliah.mk_id')
+            ->join('mahasiswa', 'mahasiswa.Nim', '=', 'mahasiswa_matakuliah.mhs_id')
+            ->select('mahasiswa_matakuliah.*', 'matakuliah.*')
+            ->where('mhs_id', $Nim)
+            ->get();
+        return view('mahasiswas.nilai', compact('mahasiswa', 'nilai'));
+    }
 };
